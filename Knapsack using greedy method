@@ -1,0 +1,29 @@
+def knapsack_greedy(weights, values, capacity):
+    # Calculate value-to-weight ratios for all items
+    ratios = [(values[i] / weights[i], weights[i], values[i]) for i in range(len(weights))]
+    
+    # Sort items based on value-to-weight ratio in descending order
+    ratios.sort(reverse=True)
+    
+    # Initialize variables
+    total_value = 0
+    remaining_capacity = capacity
+    
+    # Iterate through items
+    for ratio, weight, value in ratios:
+        # Check if the entire item can be added
+        if remaining_capacity >= weight:
+            total_value += value
+            remaining_capacity -= weight
+        else:
+            # Take a fraction of the item
+            total_value += remaining_capacity * ratio
+            break
+    
+    return total_value
+
+# Example usage:
+weights = [10, 20, 30]
+values = [60, 100, 120]
+capacity = 50
+print("Maximum value that can be obtained:", knapsack_greedy(weights, values, capacity))
