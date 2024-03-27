@@ -1,0 +1,14 @@
+# Create a list
+my_list = [1, 2, 3, 4, 5]
+
+# Insert 0 at the beginning of the list
+my_list.insert(0, 0)
+
+# Insert 6 at the end of the list
+my_list.insert(len(my_list), 6)
+
+# Insert 7 at the index 3
+my_list.insert(3, 7)
+
+# Print the modified list
+print(my_list)
