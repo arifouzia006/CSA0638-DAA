@@ -1,0 +1,31 @@
+import sys
+
+def assignment_problem(cost_matrix):
+    n = len(cost_matrix)
+    bound = 0
+    for i in range(n):
+        min_row = min(cost_matrix[i])
+        bound += min_row
+        for j in range(n):
+            cost_matrix[i][j] -= min_row
+    return _assignment_problem(cost_matrix, n, [], bound)
+
+def _assignment_problem(cost_matrix, n, assignment, bound):
+    if len(assignment) == n:
+        return sum(cost_matrix[i][assignment[i]] for i in range(n))
+    else:
+        min_cost = sys.maxsize
+        for j in range(n):
+            if cost_matrix[len(assignment)][j] < min_cost:
+                min_cost = cost_matrix[len(assignment)][j]
+                min_col = j
+        for j in range(min_col, n):
+            if cost_matrix[len(assignment)][j] == min_cost:
+                assignment.append(j)
+                cost_matrix[len(assignment)][j] = sys.maxsize
+                new_bound = bound - min_cost + _assignment_problem(cost_matrix, n, assignment, bound)
+                if new_bound >= min_cost:
+                    return new_bound
+                cost_matrix[len(assignment)][j] = min_cost
+                assignment.pop()
+        return bound
