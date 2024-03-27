@@ -1,0 +1,23 @@
+from functools import lru_cache
+
+@lru_cache()
+def min_cost(pricelist, number_of_days):
+    if number_of_days == 0:
+        return 0
+
+    min_cost = float('inf')
+    for price_option in pricelist:
+        if price_option.days_covered <= number_of_days:
+            min_cost = min(min_cost, price_option.cost + min_cost(pricelist, number_of_days - price_option.days_covered))
+
+    return min_cost
+
+options = [
+    PriceOption(name='Daily rate', days_covered=1, cost=10),
+    PriceOption(name='Weekly rate', days_covered=7, cost=45),
+    PriceOption(name='Monthly rate', days_covered=28, cost=120),
+]
+
+number_of_days = 10
+
+print(min_cost(options, number_of_days))
