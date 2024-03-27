@@ -1,0 +1,12 @@
+def get_factors(n, curr_factor=2, factors=None):
+    if factors is None:
+        factors = []
+
+    if curr_factor > n:
+        return factors
+
+    if n % curr_factor == 0:
+        factors.append(curr_factor)
+        return get_factors(n // curr_factor, curr_factor, factors)
+
+    return get_factors(n, curr_factor + 1, factors)
