@@ -1,0 +1,57 @@
+def nQueens(n):
+    # Initialize the board to be an empty list
+    board = []
+    # Iterate over the rows of the board
+    for i in range(n):
+        # Initialize the row to be an empty list
+        row = []
+        # Insert a queen in the current column
+        for j in range(n):
+            row.append(-1)
+        board.append(row)
+    # Define a helper function to check if the current solution is valid
+    def isValid(i):
+        # Iterate over the previous rows
+        for j in range(i):
+            # Check if the queen in the current column is on the same diagonal as the queen in the previous row
+            if board[j][i] == 1:
+                return False
+            # Check if the queen in the current column is on the same column as the queen in the previous row
+            if board[i][j] == 1:
+                return False
+            # Check if the queen in the current column is on the same diagonal as the queen in the previous row
+            if abs(i - j) == abs(board[j][i] - board[i][j]):
+                return False
+        # If the current solution is valid, return True
+        return True
+
+    # Define a helper function to place a queen in the current column
+    def placeQueen(i):
+        # If the current row is greater than or equal to the number of rows, return True
+        if i == n:
+            return True
+
+        # Iterate over the columns of the current row
+        for j in range(n):
+            # Check if the current solution is valid
+            if isValid(i):
+                # Place a queen in the current column
+                board[i][j] = 1
+                # Try to place a queen in the next column
+                if placeQueen(i + 1):
+                    return True
+                # If the function returns False, remove the queen from the current column
+                board[i][j] = -1
+        return False
+
+    # Place the queens on the board
+    if placeQueen(0):
+        # Print the solution
+        for row in board:
+            print(row)
+    else:
+        # If the function returns False, print that there is no solution
+        print("No solution")
+
+# Test the function
+nQueens(8)
