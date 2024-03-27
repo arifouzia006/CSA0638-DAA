@@ -1,0 +1,22 @@
+def printPascalTriangle(n):
+    # Initialize the first row to 1
+    row = [1]
+    # Print the first row
+    print(row)
+    # Iterate over the remaining rows
+    for i in range(1, n):
+        # Initialize the current row
+        lastRow = row
+        row = [1]
+        # Iterate over the elements of the current row
+        for j in range(1, i):
+            # Calculate the value of the current element
+            row.append(lastRow[j - 1] + lastRow[j])
+        # Add the last element of the current row
+        row.append(1)
+        # Print the current row
+        print(row)
+
+# Test the function
+n = 5
+printPascalTriangle(n)
