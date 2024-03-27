@@ -1,0 +1,20 @@
+def perfectNumbers(start, end):
+    # Initialize an empty list to store the perfect numbers
+    perfect_numbers = []
+    # Iterate over the range from start to end
+    for i in range(start, end + 1):
+        # Initialize a variable to store the sum of the divisors of the number
+        sum_divisors = 0
+        # Iterate over the numbers from 1 to i
+        for j in range(1, i + 1):
+            # If j is a divisor of i, add it to the sum of the divisors
+            if i % j == 0:
+                sum_divisors += j
+        # If the sum of the divisors is equal to i, append i to the list
+        if sum_divisors == i:
+            perfect_numbers.append(i)
+    # Return the list of perfect numbers
+    return perfect_numbers
+
+# Test the function
+print(perfectNumbers(1, 1000))
