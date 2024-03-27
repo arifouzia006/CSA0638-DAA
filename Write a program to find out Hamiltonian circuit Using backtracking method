@@ -1,0 +1,38 @@
+def hamiltonianCircuit(graph, n, v, pos, visited, circuit):
+    # If the current vertex is the starting vertex and the circuit is valid, print the circuit
+    if pos == 1 and isValid(graph, n, visited, circuit):
+        print(circuit)
+    # Iterate over the unvisited neighbors of the current vertex
+    for i in range(n):
+        # If the current vertex and the neighbor are adjacent and the neighbor has not been visited
+        if graph[pos][i] == 1 and visited[i] == 0:
+            # Color the current vertex and the neighbor
+            visited[i] = 1
+            circuit[i] = pos
+            # Find a Hamiltonian circuit for the next vertex
+            hamiltonianCircuit(graph, n, i, pos + 1, visited, circuit)
+            # Remove the color from the current vertex and the neighbor
+            visited[i] = 0
+            circuit[i] = 0
+
+def isValid(graph, n, visited, circuit):
+    # Check if the circuit is valid
+    for i in range(len(visited)):
+        if circuit[i] != 0 and visited[circuit[i] - 1] == 0:
+            return False
+    # If the circuit is valid, return True
+    return True
+
+# Test the function
+graph = [[0, 1, 0, 1, 0, 1],
+         [1, 0, 1, 1, 1, 1],
+         [0, 1, 0, 0, 1, 1],
+         [1, 1, 0, 0, 1, 1],
+         [0, 1, 1, 1, 0, 1],
+         [1, 1, 1, 1, 1, 0]]
+n = 6
+v = 0
+pos = 1
+visited = [0] * n
+circuit = [0] * n
+hamiltonianCircuit(graph, n, v, pos, visited, circuit)
