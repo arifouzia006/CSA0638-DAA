@@ -1,0 +1,30 @@
+def max_containers(N, X):
+    # Initialize a 2D array to represent the pyramid of containers
+    container_matrix = [[0 for _ in range(N)] for _ in range(N)]
+
+    # Fill the topmost container with X units of liquid
+    container_matrix[0][0] = X
+
+    # Iterate over the levels of the pyramid
+    for level in range(1, N):
+        # Iterate over the containers in the current level
+        for container in range(level):
+            # Check if the container at the previous level is half-filled
+            if container_matrix[level - 1][container // 2] > 0:
+                # If the container has space, fill it with half of the liquid from the previous container
+                if container_matrix[level][container] == 0:
+                    container_matrix[level][container] = X // 2
+                # Decrease the liquid in the previous container
+                else:
+                    container_matrix[level][container] += X // 2
+                # Decrease the liquid in the previous level container
+                container_matrix[level - 1][container // 2] -= X // 2
+
+    # Calculate the number of containers that are fully filled
+    filled_containers = 0
+    for level in range(N):
+        for container in range(level):
+            if container_matrix[level][container] == X:
+                filled_containers += 1
+
+    return filled_containers
