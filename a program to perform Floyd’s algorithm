@@ -1,0 +1,21 @@
+def floydWarshall(graph):
+    n = len(graph)
+    memo = [[float('inf')] * n for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            memo[i][j] = graph[i][j]
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if memo[i][j] > memo[i][k] + memo[k][j]:
+                    memo[i][j] = memo[i][k] + memo[k][j]
+    return memo
+
+# Test the function
+graph = [[0, 10, 20, 0, 0],
+         [10, 0, 5, 16, 1],
+         [20, 5, 0, 20, 2],
+         [0, 16, 20, 0, 5],
+         [0, 1, 2, 5, 0]]
+n = 5
+print(floydWarshall(graph))
