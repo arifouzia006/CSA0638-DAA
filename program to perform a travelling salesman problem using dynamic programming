@@ -1,0 +1,38 @@
+def tsp(graph, n):
+    # Initialize a memoization table to store the shortest path from each city
+    memo = [[float('inf')] * (1 << n) for _ in range(n)]
+    # Initialize the first row of the memoization table to 0
+    for i in range(1 << n):
+        memo[0][i] = 0
+    # Iterate over the cities from the second to the last
+    for i in range(1, n):
+        # Iterate over the proper subsets of cities
+        for subset in range(1, (1 << n) - 1):
+            # If the subset is not empty
+            if subset != 0:
+                # Iterate over the cities that are not included in the subset
+                for j in range(1, n + 1):
+                    # If the city is not included in the subset
+                    if (1 << (j - 1)) & subset == 0:
+                        # Update the shortest path from the current city to the subset
+                        memo[i][subset | (1 << (j - 1))] = min(
+                            memo[i][subset | (1 << (j - 1))],
+                            memo[i - 1][subset] + graph[i - 1][j - 1]
+                        )
+    # Initialize the variable to store the shortest path
+    shortest = float('inf')
+    # Iterate over the subsets of cities that include all the cities
+    for i in range(1, (1 << n) - 1):
+        if (1 << (n - 1)) & i == 0:
+            shortest = min(shortest, memo[n - 1][i] + graph[n - 1][0])
+    # Return the shortest path
+    return shortest
+
+# Test the function
+graph = [[0, 11, 10, 100, 10],
+         [11, 0, 10, 10, 1],
+         [10, 10, 0, 1, 1],
+         [100, 10, 1, 0, 10],
+         [10, 1, 1, 10, 0]]
+n = 5
+print(tsp(graph, n))
